@@ -34,7 +34,7 @@ export function ChatWorkspace({ threadId, initialMessages = [], title = "New con
   async function refreshThreads() { try { setThreads(await listThreads()); } catch { /* auth gate handles this */ } }
   useEffect(() => { void refreshThreads(); }, [threadId]);
   useEffect(() => { inputRef.current?.focus(); }, [threadId, status]);
-  useEffect(() => { if (!threadId) return; const key = `vk-ai-prompt-${threadId}`; const pending = sessionStorage.getItem(key); if (pending) { sessionStorage.removeItem(key); void sendMessage({ text: pending }); setCurrentTitle(pending.slice(0, 54)); } }, [threadId, sendMessage]);
+  useEffect(() => { if (!threadId) return; const key = `vk-ai-prompt-${threadId}`; const pending = sessionStorage.getItem(key); if (pending) { sessionStorage.removeItem(key); void sendMessage({ text: pending }); setCurrentTitle(pending.slice(0, 54)); } }, [threadId]);
 
   async function newChat() { try { const created = await createThread(); await refreshThreads(); void navigate({ to: "/chat/$threadId", params: { threadId: created.id } }); setSidebar(false); } catch (error) { toast.error(error instanceof Error ? error.message : "Could not start a conversation."); } }
   async function remove(id: string) { await deleteThread({ data: { threadId: id } }); await refreshThreads(); if (id === threadId) void navigate({ to: "/chat" }); }
