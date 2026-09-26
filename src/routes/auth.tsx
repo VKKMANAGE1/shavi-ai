@@ -33,8 +33,8 @@ function AuthPage() {
       ? await supabase.auth.signInWithPassword({ email, password })
       : await supabase.auth.signUp({ email, password, options: { emailRedirectTo: window.location.origin } });
     setBusy(false);
-    if (result.error) return toast.error(result.error.message);
-    if (mode === "signup" && !result.data.session) return toast.success("Check your email to confirm your account.");
+    if (result.error) { toast.error(result.error.message); return; }
+    if (mode === "signup" && !result.data.session) { toast.success("Check your email to confirm your account."); return; }
     void navigate({ to: "/chat" });
   }
 
