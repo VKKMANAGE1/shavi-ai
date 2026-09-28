@@ -144,7 +144,7 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     letter-spacing: 0;
-    overflow: hidden;
+    overflow-x: hidden;
   }
 }
 
