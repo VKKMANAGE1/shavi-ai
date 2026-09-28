@@ -71,7 +71,7 @@ function AuthPage() {
           <div className="relative"><Input aria-label="Password" className="h-11 pr-11" type={visible ? "text" : "password"} placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} minLength={8} required /><Button aria-label={visible ? "Hide password" : "Show password"} className="absolute right-1.5 top-1.5" size="icon-sm" type="button" variant="ghost" onClick={() => setVisible(!visible)}>{visible ? <EyeOff /> : <Eye />}</Button></div>
           <Button className="h-11 w-full" disabled={busy} type="submit">{busy ? "Please wait…" : mode === "signin" ? "Sign in" : "Create account"}</Button>
         </form>
-        <button className="mx-auto mt-6 block text-sm text-muted-foreground hover:text-foreground" onClick={() => setMode(mode === "signin" ? "signup" : "signin")}>{mode === "signin" ? "New here? Create an account" : "Already have an account? Sign in"}</button>
+        <Button className="mx-auto mt-6 flex text-sm text-muted-foreground hover:text-foreground" variant="link" onClick={() => setMode(mode === "signin" ? "signup" : "signin")}>{mode === "signin" ? "New here? Create an account" : "Already have an account? Sign in"}</Button>
       </div>
     </section>
   </main>;

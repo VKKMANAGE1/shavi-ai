@@ -18,7 +18,9 @@ export const Route = createFileRoute("/_authenticated/chat/$threadId")({
 function ThreadPage() {
   const { threadId } = Route.useParams();
   const [data, setData] = useState<{ title: string; messages: UIMessage[] }>();
-  useEffect(() => { setData(undefined); void getThread({ data: { threadId } }).then((result) => setData({ title: result.thread.title, messages: result.messages })); }, [threadId]);
+  const [error, setError] = useState("");
+  useEffect(() => { setData(undefined); setError(""); void getThread({ data: { threadId } }).then((result) => setData({ title: result.thread.title, messages: result.messages })).catch((reason) => setError(reason instanceof Error ? reason.message : "Could not open this conversation.")); }, [threadId]);
+  if (error) return <div className="flex h-dvh items-center justify-center bg-background text-sm text-destructive">{error}</div>;
   if (!data) return <div className="flex h-dvh items-center justify-center bg-background text-sm text-muted-foreground">Opening conversation…</div>;
   return <ChatWorkspace initialMessages={data.messages} key={threadId} threadId={threadId} title={data.title} />;
 }
