@@ -72,6 +72,7 @@ function AuthPage() {
           <Button className="h-11 w-full" disabled={busy} type="submit">{busy ? "Please wait…" : mode === "signin" ? "Sign in" : "Create account"}</Button>
         </form>
         <Button className="mx-auto mt-6 flex text-sm text-muted-foreground hover:text-foreground" variant="link" onClick={() => setMode(mode === "signin" ? "signup" : "signin")}>{mode === "signin" ? "New here? Create an account" : "Already have an account? Sign in"}</Button>
+        <p className="mt-12 text-center text-xs text-muted-foreground lg:hidden">Made by <span className="font-semibold text-foreground">Vinay Kushwaha</span></p>
       </div>
     </section>
   </main>;
