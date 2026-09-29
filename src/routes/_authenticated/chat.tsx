@@ -1,5 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { ChatWorkspace } from "@/components/chat-workspace";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/chat")({
   head: () => ({ meta: [
@@ -9,5 +8,5 @@ export const Route = createFileRoute("/_authenticated/chat")({
     { property: "og:description", content: "Start a private conversation with VK AI." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary" },
-  ] }), component: () => <ChatWorkspace />,
+  ] }), component: () => <Outlet />,
 });
