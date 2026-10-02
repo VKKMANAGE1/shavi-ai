@@ -34,7 +34,7 @@ export const Route = createFileRoute("/api/chat")({ server: { handlers: { POST: 
     ...(row.reasoning ? [{ type: "reasoning" as const, text: row.reasoning }] : []),
     { type: "text" as const, text: row.content },
   ] })), { id: last.id, role: "user", parts: [{ type: "text", text: userText }] }];
-  const result = streamText({ model: nvidia("nvidia/nemotron-3-ultra-550b-a55b"), system: "You are VK AI, a precise, thoughtful and friendly assistant created by Vinay Kushwaha. Answer in the user's language. Use clear Markdown. Be concise by default, but thorough when the task needs it.", messages: await convertToModelMessages(trustedMessages), temperature: 1, topP: 0.95, maxOutputTokens: 16384, maxRetries: 0, abortSignal: request.signal });
+  const result = streamText({ model: nvidia("nvidia/nemotron-3-ultra-550b-a55b"), system: "You are ShâVì Ai, a precise, thoughtful and friendly assistant created by Vìñâý Kúshwâhå. Answer in the user's language. Use clear Markdown. Be concise by default, but thorough when the task needs it.", messages: await convertToModelMessages(trustedMessages), temperature: 1, topP: 0.95, maxOutputTokens: 16384, maxRetries: 0, abortSignal: request.signal });
    return result.toUIMessageStreamResponse({ originalMessages: body.messages, sendReasoning: true, onError: (error) => { console.error("NVIDIA request failed", error); return "Could not get a response from NVIDIA. Please try again later."; }, onFinish: async ({ responseMessage, isAborted }) => {
     const text = responseMessage.parts.filter((part) => part.type === "text").map((part) => part.text).join("");
     const reasoning = responseMessage.parts.filter((part) => part.type === "reasoning").map((part) => part.text).join("\n");

@@ -6,10 +6,10 @@ import { getThread } from "@/lib/chat.functions";
 
 export const Route = createFileRoute("/_authenticated/chat/$threadId")({
   head: () => ({ meta: [
-    { title: "Conversation — VK AI" },
-    { name: "description", content: "Your private VK AI conversation." },
-    { property: "og:title", content: "Conversation — VK AI" },
-    { property: "og:description", content: "Your private VK AI conversation." },
+    { title: "Conversation — ShâVì Ai" },
+    { name: "description", content: "Your private ShâVì Ai conversation." },
+    { property: "og:title", content: "Conversation — ShâVì Ai" },
+    { property: "og:description", content: "Your private ShâVì Ai conversation." },
     { property: "og:type", content: "website" },
     { name: "twitter:card", content: "summary" },
   ] }), component: ThreadPage,
