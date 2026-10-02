@@ -56,7 +56,7 @@ function AuthPage() {
           {["Private saved conversations", "Streaming answers", "Deep reasoning mode", "Markdown & code support"].map((item) => <div className="flex items-center gap-3" key={item}><Check className="size-4 text-primary" />{item}</div>)}
         </div>
       </div>
-      <div className="space-y-1 text-sm text-muted-foreground"><p>© 2026 VK Tech Learn. All rights reserved.</p><p>By: <span className="font-semibold text-foreground">Vìñâý Kúshwâhå</span> · <a className="underline-offset-4 hover:text-foreground hover:underline" href="https://www.instagram.com/mr__vinay__kushwaha" rel="noreferrer" target="_blank">Follow on Instagram ◉ @mr__vinay__kushwaha</a></p>
+      <div className="space-y-1 text-sm text-muted-foreground"><p>© 2026 VK Tech Learn. All rights reserved.</p><p>By: <span className="font-semibold text-foreground">Vìñâý Kúshwâhå</span> · <a className="underline-offset-4 hover:text-foreground hover:underline" href="https://www.instagram.com/mr__vinay__kushwaha" rel="noreferrer" target="_blank">Follow on Instagram ◉ @mr__vinay__kushwaha</a></p></div>
     </section>
     <section className="flex items-center justify-center p-6 sm:p-10">
       <div className="w-full max-w-md animate-rise-in">
@@ -72,7 +72,7 @@ function AuthPage() {
           <Button className="h-11 w-full" disabled={busy} type="submit">{busy ? "Please wait…" : mode === "signin" ? "Sign in" : "Create account"}</Button>
         </form>
         <Button className="mx-auto mt-6 flex text-sm text-muted-foreground hover:text-foreground" variant="link" onClick={() => setMode(mode === "signin" ? "signup" : "signin")}>{mode === "signin" ? "New here? Create an account" : "Already have an account? Sign in"}</Button>
-        <div className="mt-12 space-y-1 text-center text-xs text-muted-foreground lg:hidden"><p>© 2026 VK Tech Learn. All rights reserved.</p><p>By: <span className="font-semibold text-foreground">Vìñâý Kúshwâhå</span> · <a className="underline-offset-4 hover:text-foreground hover:underline" href="https://www.instagram.com/mr__vinay__kushwaha" rel="noreferrer" target="_blank">Follow on Instagram ◉ @mr__vinay__kushwaha</a></p>
+        <div className="mt-12 space-y-1 text-center text-xs text-muted-foreground lg:hidden"><p>© 2026 VK Tech Learn. All rights reserved.</p><p>By: <span className="font-semibold text-foreground">Vìñâý Kúshwâhå</span> · <a className="underline-offset-4 hover:text-foreground hover:underline" href="https://www.instagram.com/mr__vinay__kushwaha" rel="noreferrer" target="_blank">Follow on Instagram ◉ @mr__vinay__kushwaha</a></p></div>
       </div>
     </section>
   </main>;
