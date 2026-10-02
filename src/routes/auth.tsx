@@ -2,6 +2,8 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { BrainCircuit, Check, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
+import logoDark from "@/assets/shavi-logo.png";
+import logoLight from "@/assets/shavi-logo-light.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { lovable } from "@/integrations/lovable";
@@ -78,4 +80,4 @@ function AuthPage() {
   </main>;
 }
 
-function Brand() { return <div className="flex items-center gap-3"><div className="grid size-10 place-items-center rounded-md bg-primary text-primary-foreground"><BrainCircuit className="size-5" /></div><div><p className="font-display text-lg font-bold">ShâVì Ai</p><p className="text-xs text-muted-foreground">Nemotron intelligence</p></div></div>; }
+function Brand() { return <div className="flex items-center"><img alt="ShâVì Ai — Intelligent Solutions" className="h-12 w-auto dark:hidden" src={logoDark} /><img alt="ShâVì Ai — Intelligent Solutions" className="hidden h-12 w-auto dark:block" src={logoLight} /></div>; }
