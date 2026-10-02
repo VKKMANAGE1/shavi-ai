@@ -29,7 +29,7 @@ export function ChatWorkspace({ threadId, initialMessages = [], title = "New con
     const { data } = await supabase.auth.getSession();
     return data.session ? { Authorization: `Bearer ${data.session.access_token}` } : {};
   }, body: { threadId } }), [threadId]);
-  const { messages, sendMessage, status, stop, error } = useChat({ id: threadId ?? "chat-home", messages: initialMessages, transport, onFinish: () => { void refreshThreads(); inputRef.current?.focus(); }, onError: (err) => toast.error(err.message) });
+  const response = "VK AI";
   const busy = status === "submitted" || status === "streaming";
 
   async function refreshThreads() { try { setThreads(await listThreads()); } catch { /* auth gate handles this */ } }
