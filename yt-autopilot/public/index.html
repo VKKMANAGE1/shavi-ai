@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="hi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>YT AutoPilot — Drive se YouTube, roz automatic</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%23ff2d55'/%3E%3Cpath d='M40 30l32 20-32 20z' fill='white'/%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">▶</span>
+        <div>
+          <h1>YT AutoPilot</h1>
+          <p>Drive → YouTube · roz automatic</p>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <span id="channel-chip" class="chip chip-muted">Not connected</span>
+        <button id="refresh-btn" class="btn btn-ghost" type="button">Refresh</button>
+        <button id="logout-btn" class="btn btn-ghost hidden" type="button">Logout</button>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <section id="setup-banner" class="banner hidden">
+        <div class="banner-head">
+          <strong id="setup-title">Setup baaki hai</strong>
+          <span id="setup-sub" class="muted"></span>
+        </div>
+        <div id="setup-body"></div>
+      </section>
+
+      <section class="stats" id="stats">
+        <article class="stat">
+          <span class="stat-label">Aaj publish</span>
+          <strong id="stat-today">0 / 5</strong>
+          <span class="stat-foot" id="stat-today-foot">daily limit</span>
+        </article>
+        <article class="stat">
+          <span class="stat-label">Queue me</span>
+          <strong id="stat-queued">0</strong>
+          <span class="stat-foot">videos waiting</span>
+        </article>
+        <article class="stat">
+          <span class="stat-label">Total published</span>
+          <strong id="stat-published">0</strong>
+          <span class="stat-foot" id="stat-failed-foot">failed: 0</span>
+        </article>
+        <article class="stat">
+          <span class="stat-label">Next upload</span>
+          <strong id="stat-next">—</strong>
+          <span class="stat-foot" id="stat-next-file">queue khaali hai</span>
+        </article>
+      </section>
+
+      <nav class="tabs" role="tablist">
+        <button class="tab active" data-tab="queue" type="button">Queue</button>
+        <button class="tab" data-tab="add" type="button">Add videos</button>
+        <button class="tab" data-tab="settings" type="button">Settings</button>
+        <button class="tab" data-tab="activity" type="button">Activity</button>
+      </nav>
+
+      <section class="panel active" id="panel-queue">
+        <div class="panel-head">
+          <h2>Publish queue</h2>
+          <span class="muted small">Har item ka apna slot hota hai — 5 videos/day default.</span>
+        </div>
+        <div class="table-wrap">
+          <table class="queue-table">
+            <thead>
+              <tr>
+                <th>Video / title</th>
+                <th>Publish at</th>
+                <th>Status</th>
+                <th class="right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="queue-body"></tbody>
+          </table>
+          <div id="queue-empty" class="empty hidden">
+            <p>Queue khaali hai.</p>
+            <button class="btn btn-primary" type="button" data-goto="add">Drive links add karo</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-add">
+        <div class="panel-head">
+          <h2>Drive se videos add karo</h2>
+          <span class="muted small">Ek se zyada link ya poora folder link — dono chalega.</span>
+        </div>
+        <label class="field">
+          <span>Google Drive links</span>
+          <textarea
+            id="add-input"
+            rows="6"
+            placeholder="https://drive.google.com/drive/folders/XXXX
+https://drive.google.com/file/d/YYYY/view
+https://drive.google.com/open?id=ZZZZ"
+          ></textarea>
+        </label>
+        <div class="row">
+          <button id="add-btn" class="btn btn-primary" type="button">Import + auto title/tags</button>
+          <span id="add-hint" class="muted small"></span>
+        </div>
+        <div id="add-result" class="result hidden"></div>
+        <ul class="notes">
+          <li>Folder link me sirf video files uthai jaati hain, aur wahi videos jo pehle se queue me nahi hain.</li>
+          <li>Private files ke liye wahi Google account connect karo jiske paas access hai. Public files ke liye <code>GOOGLE_API_KEY</code> kaafi hai.</li>
+          <li>Title, description aur tags trending keywords + AI se bhar jaate hain — baad me edit bhi kar sakte ho.</li>
+        </ul>
+      </section>
+
+      <section class="panel" id="panel-settings">
+        <div class="panel-head">
+          <h2>Settings</h2>
+          <span class="muted small" id="tz-label"></span>
+        </div>
+        <form id="settings-form" class="grid">
+          <label class="field">
+            <span>Videos per day</span>
+            <input id="s-perday" type="number" min="1" max="50" />
+          </label>
+          <label class="field">
+            <span>Publish times (comma separated, HH:MM)</span>
+            <input id="s-slots" type="text" placeholder="09:00, 12:00, 15:00, 18:00, 21:00" />
+          </label>
+          <label class="field">
+            <span>Privacy</span>
+            <select id="s-privacy">
+              <option value="public">Public</option>
+              <option value="unlisted">Unlisted</option>
+              <option value="private">Private</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Category</span>
+            <select id="s-category"></select>
+          </label>
+          <label class="field">
+            <span>Upload lead time (minutes)</span>
+            <input id="s-lead" type="number" min="0" max="10080" />
+          </label>
+          <label class="field">
+            <span>Trending region</span>
+            <input id="s-region" type="text" maxlength="2" placeholder="IN" />
+          </label>
+          <label class="field span-2">
+            <span>Channel niche (AI ko batane ke liye)</span>
+            <input id="s-niche" type="text" />
+          </label>
+          <label class="field span-2">
+            <span>Extra tags (comma separated)</span>
+            <input id="s-tagpool" type="text" />
+          </label>
+          <label class="field span-2">
+            <span>Description template</span>
+            <textarea id="s-desc" rows="3"></textarea>
+          </label>
+          <label class="check span-2">
+            <input id="s-ai" type="checkbox" />
+            <span>AI se title/description/tags generate karo (trending keywords ke saath)</span>
+          </label>
+          <div class="row span-2">
+            <button class="btn btn-primary" type="submit">Save settings</button>
+            <span id="settings-msg" class="muted small"></span>
+          </div>
+        </form>
+        <div class="danger-zone">
+          <div>
+            <strong>YouTube connection</strong>
+            <p class="muted small">Disconnect karne se queue safe rahegi, bas auto-publish rukega.</p>
+          </div>
+          <button id="disconnect-btn" class="btn btn-danger hidden" type="button">Disconnect</button>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-activity">
+        <div class="panel-head">
+          <h2>Activity log</h2>
+          <span class="muted small">Latest 200 events</span>
+        </div>
+        <ul id="log-list" class="log-list"></ul>
+      </section>
+    </main>
+
+    <div class="modal hidden" id="modal">
+      <div class="modal-card">
+        <div class="modal-head">
+          <h3 id="modal-title">Video edit</h3>
+          <button id="modal-close" class="btn btn-ghost" type="button">✕</button>
+        </div>
+        <div class="modal-body">
+          <p class="muted small" id="modal-file"></p>
+          <label class="field">
+            <span>Title (<span id="title-count">0</span>/100)</span>
+            <input id="m-title" type="text" maxlength="100" />
+          </label>
+          <label class="field">
+            <span>Tags (comma separated)</span>
+            <input id="m-tags" type="text" />
+          </label>
+          <label class="field">
+            <span>Description</span>
+            <textarea id="m-desc" rows="6"></textarea>
+          </label>
+          <div class="grid">
+            <label class="field">
+              <span>Publish at</span>
+              <input id="m-publish" type="datetime-local" />
+            </label>
+            <label class="field">
+              <span>Privacy</span>
+              <select id="m-privacy">
+                <option value="public">Public</option>
+                <option value="unlisted">Unlisted</option>
+                <option value="private">Private</option>
+              </select>
+            </label>
+          </div>
+          <div id="modal-error" class="result result-error hidden"></div>
+        </div>
+        <div class="modal-foot">
+          <button id="m-regenerate" class="btn btn-ghost" type="button">↻ Auto title/tags dobara</button>
+          <div class="row">
+            <a id="m-youtube" class="btn btn-ghost hidden" target="_blank" rel="noreferrer">YouTube par kholo</a>
+            <button id="m-save" class="btn btn-primary" type="button">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+    <script src="/app.js"></script>
+  </body>
+</html>

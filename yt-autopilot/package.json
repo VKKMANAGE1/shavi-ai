@@ -1,0 +1,19 @@
+{
+  "name": "yt-autopilot",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Google Drive se videos utha kar roz automatically YouTube par publish karne wala self-hosted auto-pilot.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "express": "^4.22.3",
+    "googleapis": "^189.0.0"
+  }
+}

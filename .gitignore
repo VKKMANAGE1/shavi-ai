@@ -20,6 +20,13 @@ dist-ssr
 .wrangler/
 .dev.vars
 
+# YT AutoPilot (self-hosted tool)
+yt-autopilot/node_modules
+yt-autopilot/data
+yt-autopilot/.env
+yt-autopilot/server.log
+yt-autopilot/.pid
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
